@@ -99,7 +99,7 @@ docker logs sparkhome
 docker run -p 8888:8888 --name spark -d sparkhome
 
 
-2. I have created folder structure with all file 
+2. I have created folder structures with all files 
 input folder has the input txt files.
 logs folder has debug file for logging the process 
 src folder has the main source code mirrormaze.py file 
@@ -123,6 +123,13 @@ The direction of movements are  "+": increase step and "-": decrease step.
 Mirrormaze.py:
 
 Maze path - To find the correct path, dimensions of the borad and the path of the laser.
-Nextposition - To find laser path and to check if the laser is trapped in the maze.
+Nextposition - To find next row and column where the laser travels and to check if the laser is trapped in the maze.
 
 I have includeded the exception handling and Logging as well but not in the entire code and can be improved.
+
+
+Approach for finding the path:
+If the input laser is horizantal, it means laser travels in same row but column changes. Column number is increased or decreased based on mirror orientation.
+If input laser is vertical, it works same as above but this time laser travels in same column but in different row.
+If the next position of laser contains mirror, then orientation and direction are changed based on mirror.
+This process is repeated until next position is outside the maze and that would be the exit position of laser.
