@@ -1,16 +1,17 @@
-from utils import mirror
-from utils import position
 import array
 import io
 import logging
+from utils import mirror
+from utils import position
 
         
-def mazePath(cls, board, col, row, orientation):
+def mazePath(board, col, row, orientation):
         
         if col < 0 or row < 0 or col >= board.length or row >= board[0].length or (not orientation == "H" and not orientation == "V"):
             print("incorrect input")
+            print("maze_patch", col, row, orientation)
             return
-        print ("the demensions of board: " + board.length + " x " + board[0].length)
+        print ("the dimensions of board: " + board.length + " x " + board[0].length)
         path = []
         direction = "+"
         path.add(position.Position(col, row, orientation, direction))
@@ -83,19 +84,12 @@ def nextPosition(cls, board, path):
                 raise Exception("the laser is trapped in the maze.")
         path.add(next)
 
-class MirrorMaze(object):
-    """ class MirrorMaze """
-    def main(cls, args):
-        """ method main """
+if __name__ == "__main__":
+    
 
         #Logging configuration
         logging.basicConfig(filename='logs/debug.log',level=logging.DEBUG,format='%(asctime)s %(levelname)s:%(message)s', datefmt='%m/%d/%Y %H:%M:%S')
         logging.disable(logging.DEBUG)
-
-        if args.length == 0:
-            print ("please give input file.")
-            logging.info('please give input file ' )
-            return
         
         mazeRow = 0
         mazeCol = 0
@@ -105,46 +99,68 @@ class MirrorMaze(object):
         laserOrientation = None
         inputCounter = 0
 
-        in_ = open(args[0],'r')
+        # in_ = open(args[0],'r')
+        contents= open("input/Sample2.txt", 'r')
         logging.info('Opening the input file ')
         
         #  read the configuration for the mirror board and the laser
         #  TO-DO: to catch all kinds of input file exceptions.
-        while in_.hasNextLine():
-            if nextLine.startsWith("-1"):
+        
+        print("before while")
+        while True:
+            line = contents.readline() 
+            if not line:break 
+
+            if "-1" in line:
                 inputCounter += 1
-                if in_.hasNext():
-                    nextLine = in_.nextLine().trim()
-            #  read maze size
+                continue     
+            if line == "\n":
+                continue
+
+        #  read maze size
             if inputCounter == 0:
-                mazeSize = nextLine
-                mazeCol = int(mazeSize.trim().split(",")[0])
-                mazeRow = int(mazeSize.trim().split(",")[1])
+                mazeSize = line.strip()
+                print(mazeSize)
+                mazeCol = mazeSize.strip().split(",")[0]
+                print(mazeCol)
+                mazeRow = mazeSize.strip().split(",")[1]
+                print(mazeRow)
+
             #  read mirror
             if inputCounter == 1:
-                mirrors.add(nextLine)
+
+                newline = line.strip()
+                mirrors.append(newline)
+                print(mirrors)
+
             #  read laser
             if inputCounter == 2:
-                laser = nextLine
-                laserStartCol = int(laser.substring(0, 1))
-                laserStartRow = int(laser.substring(2, 3))
-                laserOrientation = str(laser.substring(3))
+                laser = line.strip()
+                print(laser)
+                laserStartCol = (laser[0:1])
+                print("laserStartCol",laserStartCol)
+                laserStartRow = laser[2:3]
+                print("laserStartRow",laserStartRow)
+                laserOrientation = laser[3:4]
+                print("laserOrientation",laserOrientation)
 
-        in_.close()
+        contents.close()
         logging.info('closing the input file ' )
 
-        mirrorMaze = [None]*mazeCol
+        mirrorMaze =  mirror.onemirror[mazeCol][mazeRow]
         for m in mirrors:
             if len(m) > 4:
-                d = m.substring(3, 4)
-                s = m.substring(4)
-                tmpMirror = mirror.Mirror(d, s)
+              
+                d = m[3:4]
+                s = m[4:]
+                
+                tmpMirror = mirror.onemirror(d,s)
             else:
-                 d = m.substring(3, 4) 
-                 tmpMirror = mirror.Mirror(d)
+                 d = m[3:4]
+                 tmpMirror = mirror.twomirror(d)
 
-            col = int(m.substring(0, 1))
-            row = int(m.substring(2, 3))     
+            col = m[0:1]
+            row = m[2:3]  
             mirrorMaze[col][row] = tmpMirror
         mazePath(mirrorMaze, laserStartCol, laserStartRow, laserOrientation)
-        logging.info('Maze path', mazePath)
+        

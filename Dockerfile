@@ -14,4 +14,5 @@ RUN pip3 install -r requirements.txt
 
 CMD jupyter-lab --allow-root --no-browser --ip=0.0.0.0
 
-CMD ["python", "./mirrormaze.py"]
+CMD ["python", "./mirrormaze.py", "input/sample.txt"]
+
