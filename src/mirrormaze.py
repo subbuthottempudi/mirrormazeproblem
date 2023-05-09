@@ -105,6 +105,10 @@ if __name__ == "__main__":
     laserOrientation = None
     inputCounter = 0
 
+    # Adding the logic to read the file from runtime argument
+    #if len(sys.args) > 1:
+    #    file = sys.args[0]
+
     # in_ = open(args[0],'r')
     contents= open("input/Sample2.txt", 'r')
     logging.info('Opening the input file ')
