@@ -10,15 +10,15 @@ This process is repeated until next position is outside the maze and that would 
 
 Execution:
 ----------
-I have used the Docker to run the application and below are the commands BUild the image and run it.
+I have used the Docker to run the application and below are the commands build the image and run it.
 
 docker build . -t sparkhome
 docker image ls
 docker logs sparkhome
 docker run -p 8888:8888 --name spark -d sparkhome
 
-We Can run the python script dureclty using the below command by passing the input file as Argument.
-Python  /mirrormaze.py input/sample.txt
+We Can run the python script direclty using the below command by passing the input file as Argument.
+Python mirrormaze.py input/sample.txt
 
 
 I have created folder structures with all files 
