@@ -1,4 +1,4 @@
-#  used to track position in the path
+# used to track position in the path
 class Position(object):
    
     col = int()
@@ -22,6 +22,8 @@ class Position(object):
         self.direction = d
 
     def __str__(self):
+        
+        print("inside position str")
        
         return "position: " + self.col + "x" + self.row + " (" + self.orientation + self.direction + ") "
 

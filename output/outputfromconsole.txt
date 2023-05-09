@@ -10,8 +10,6 @@ position: 3x0 (V-)
 Final exit of laser position: 3x0 (V-)
 
 
-
-
 The dimensions of board: 4 x 5
 Extry of laser position: 1x0 (V+) 
 the path of the laser: 
